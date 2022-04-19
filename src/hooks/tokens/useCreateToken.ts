@@ -2,7 +2,7 @@ import { ApiRequest, ApiResponse } from "@types";
 import {
   CreateAccessTokenRequest,
   NewAccessToken,
-} from "project-ts";
+} from "api-ts-axios";
 import { metaUtil } from "@utils";
 import {  Reducer } from "react";
 

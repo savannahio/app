@@ -10,7 +10,7 @@ import NotFound from "@pages/NotFound";
 import ResetPassword from "@pages/ResetPassword";
 import { RouteObject } from "react-router/lib/router";
 import { routes } from "@routes/routes";
-import { AuthUser } from "project-ts";
+import { AuthUser } from "api-ts-axios";
 import UpdateAuthUser from "@pages/Auth/UpdateAuthUser";
 import UserAddEdit from "@pages/Users/UserAddEdit";
 

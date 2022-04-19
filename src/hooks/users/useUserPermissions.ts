@@ -1,28 +1,20 @@
 import { ApiRequest, ApiResponse } from "@types";
 import {
-  DirectionParam,
-  PaginatedPermissions,
-  PermissionOrderBy,
-  UsersApiGetUserPermissionsRequest,
-} from "project-ts";
+  Permission,
+  UsersApiGetUserPermissionsRequest
+} from "api-ts-axios";
 import { metaUtil } from "@utils";
 import { Reducer } from "react";
 
 interface State
   extends ApiRequest<UsersApiGetUserPermissionsRequest>,
-    ApiResponse<PaginatedPermissions> {}
+    ApiResponse<Array<Permission>> {}
 
 export const userPermissionsIS: State = {
   request: {
     id: 0,
-    page: 1,
-    per_page: 100000,
-    direction: DirectionParam.asc,
-    order_by: PermissionOrderBy.id,
   },
-  data: {
-    data: [],
-  },
+  data: [],
   ui: metaUtil.initial,
 };
 
@@ -41,10 +33,8 @@ export type UserPermissionActions =
   { type: UserPermissionTypes.setId; payload: number }
   | { type: UserPermissionTypes.setPage; payload: number }
   | { type: UserPermissionTypes.setPerPage; payload: number }
-  | { type: UserPermissionTypes.setDirection; payload: DirectionParam }
-  | { type: UserPermissionTypes.setOrderBy; payload: PermissionOrderBy }
   | { type: UserPermissionTypes.loading }
-  | { type: UserPermissionTypes.loaded; payload: PaginatedPermissions }
+  | { type: UserPermissionTypes.loaded; payload: Array<Permission> }
   | { type: UserPermissionTypes.rejected };
 
 export const userPermissionsReducer: Reducer<State, UserPermissionActions> = (state, payload): State => {
@@ -55,38 +45,6 @@ export const userPermissionsReducer: Reducer<State, UserPermissionActions> = (st
         request: {
           ...state.request,
           id: payload.payload,
-        },
-      };
-    case UserPermissionTypes.setPage:
-      return {
-        ...state,
-        request: {
-          ...state.request,
-          page: payload.payload,
-        },
-      };
-    case UserPermissionTypes.setPerPage:
-      return {
-        ...state,
-        request: {
-          ...state.request,
-          per_page: payload.payload,
-        },
-      };
-    case UserPermissionTypes.setDirection:
-      return {
-        ...state,
-        request: {
-          ...state.request,
-          direction: payload.payload,
-        },
-      };
-    case UserPermissionTypes.setOrderBy:
-      return {
-        ...state,
-        request: {
-          ...state.request,
-          order_by: payload.payload,
         },
       };
     case UserPermissionTypes.loading:

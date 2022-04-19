@@ -1,19 +1,12 @@
 import React, { ReactNode, useMemo, createContext } from "react";
-import { ApiRequest, Observer } from "@types";
-import { AuthUser, CreateUserRequest, LoginRequest, User } from "project-ts";
-import { aclUtil, metaUtil, storageUtil } from "@utils";
+import { ApiRequest, AuthPermissions, Observer } from "@types";
+import { AuthUser, CreateUserRequest, LoginRequest, User } from "api-ts-axios";
+import { getAuthPermissions, getUniqueUserPermissions, metaUtil, storageUtil } from "@utils";
 import { authApi, terminateSession, usersApi } from "@api/project";
-
-interface Permissions {
-  users: {
-    list: boolean,
-    show: boolean
-  }
-}
 
 export interface AuthState {
   user: AuthUser | undefined
-  permissions: Permissions
+  permissions: AuthPermissions
   me: Observer
   login: ApiRequest<LoginRequest>
   register: ApiRequest<CreateUserRequest>
@@ -21,15 +14,11 @@ export interface AuthState {
 }
 
 const authUser = storageUtil.getUser();
+const permissionsIS = authUser ? getUniqueUserPermissions(authUser) : [];
 
 export const authIS: AuthState = {
   user: authUser,
-  permissions: {
-    users: {
-      list: aclUtil.canListUsers(authUser),
-      show: aclUtil.canShowUsers(authUser),
-    }
-  },
+  permissions: getAuthPermissions(permissionsIS),
   login: {
     request: {
       email: '',
@@ -57,7 +46,7 @@ export const authIS: AuthState = {
 
 export type AuthContextType = {
   user: AuthUser | undefined
-  permissions: Permissions
+  permissions: AuthPermissions
   me: Observer
   login: ApiRequest<LoginRequest>
   logout: Observer
@@ -94,13 +83,8 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
 
   const setAuthUser = (request?: AuthUser|User) => {
     const data = !request ? request : {...auth.user, ...request} as AuthUser
-    const permissions = {
-      users: {
-        list: aclUtil.canListUsers(authUser),
-        show: aclUtil.canShowUsers(authUser),
-      }
-    }
-    setAuth({...auth, user: data, permissions})
+    const uniquePermissions = data ? getUniqueUserPermissions(data) : [];
+    setAuth({...auth, user: data, permissions: getAuthPermissions(uniquePermissions)})
     if (data) {
       storageUtil.setUser(data)
     }

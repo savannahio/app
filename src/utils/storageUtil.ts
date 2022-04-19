@@ -1,4 +1,4 @@
-import { PaginatedPermissions, PaginatedRoles, AuthUser } from "project-ts";
+import { PaginatedPermissions, PaginatedRoles, AuthUser } from "api-ts-axios";
 
 const AUTH_USER_KEY = "authUser";
 const AUTH_ROLES_KEY = "authRoles";

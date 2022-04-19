@@ -5,7 +5,7 @@ import {
   tokenReducer,
   TokenTypes
 } from "@hooks/tokens/useTokens";
-import { DirectionParam, NewAccessToken, PersonalAccessToken } from "project-ts";
+import { DirectionParam, NewAccessToken, PersonalAccessToken } from "api-ts-axios";
 import DirectionSelector from "@components/selectors/DirectionSelector";
 import PerPageSelector from "@components/selectors/PerPageSelector";
 import DeleteTokenButton from "@components/buttons/DeleteTokenButton";

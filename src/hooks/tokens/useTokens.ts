@@ -4,7 +4,7 @@ import {
   PaginatedAccessTokens,
   AccessTokenOrderBy,
   DirectionParam, PersonalAccessToken
-} from "project-ts";
+} from "api-ts-axios";
 import { ApiRequest, ApiResponse } from "@types";
 import { metaUtil } from "@utils";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { DirectionParam } from "project-ts";
+import { DirectionParam } from "api-ts-axios";
 
 interface Props {
   disabled?: boolean;

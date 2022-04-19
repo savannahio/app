@@ -24,7 +24,7 @@ const UserRoles: React.FC<Props> = ({ id }) => {
   }
   return (
     <div className="flex">
-      {data.data.map(role => (
+      {data.map(role => (
         <span key={`user-role-${role.id}`}>{role.name}</span>
       ))}
     </div>

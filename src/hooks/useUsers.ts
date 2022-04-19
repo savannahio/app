@@ -4,7 +4,7 @@ import {
   PaginatedUsers,
   UserOrderBy,
   DirectionParam,
-} from "project-ts";
+} from "api-ts-axios";
 import { usersApi } from "@api/project";
 import { ApiRequest, ApiResponse, PaginationActions, PaginationTypes } from "@types";
 import { metaUtil } from "@utils";

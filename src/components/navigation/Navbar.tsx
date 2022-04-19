@@ -1,19 +1,30 @@
-import React from 'react'
+import React, { useContext } from "react";
 import { Link } from 'react-router-dom'
 import { routes } from "@routes";
-import { AuthUser } from "project-ts";
+import { AuthUser } from "api-ts-axios";
 import LogoutButton from "@components/buttons/LogoutButton";
+import { AuthContext, AuthContextType } from "@context/authContext";
+import ApiDocsSelector from "@components/selectors/ApiDocsSelector";
 
 interface Props {
   user?: AuthUser
 }
 const Navbar: React.FC<Props> = ({ user }) => {
+  const { permissions } = useContext(AuthContext) as AuthContextType
+  const { api: { horizon, telescope, documentation } } = permissions
+  const canViewAPiSelector = horizon && telescope && documentation
+
+  const onApiDocsChange = (uri: string) => {
+    // @ts-ignore
+    window.open(uri, '_blank').focus();
+  }
   const authItems = () => (
     <>
+      {canViewAPiSelector && <ApiDocsSelector horizon={horizon} telescope={telescope} documentation={documentation} onChange={uri => onApiDocsChange(uri)} />}
       <Link to={routes.auth.profile.path} className='p-4'>{routes.auth.profile.name}</Link>
       <Link to={routes.auth.accessTokens.path} className='p-4'>{routes.auth.accessTokens.name}</Link>
       <Link to={routes.auth.resetPassword.path} className='p-4'>{routes.auth.resetPassword.name}</Link>
-      <Link to={routes.users.index.path} className='p-4'>{routes.users.index.name}</Link>
+      {permissions.users.list && <Link to={routes.users.index.path} className='p-4'>{routes.users.index.name}</Link>}
       <LogoutButton />
     </>
   )

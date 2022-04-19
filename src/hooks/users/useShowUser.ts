@@ -1,5 +1,5 @@
 import { ApiRequest, ApiResponse } from "@types";
-import { User } from "project-ts";
+import { User } from "api-ts-axios";
 import { metaUtil } from "@utils";
 import { Dispatch, Reducer } from "react";
 import { usersApi } from "@api/project";

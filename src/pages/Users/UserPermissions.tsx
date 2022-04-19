@@ -24,7 +24,7 @@ const UserPermissions: React.FC<Props> = ({ id }) => {
   }
   return (
     <div className="flex">
-      {data.data.map(permission => (
+      {data.map(permission => (
         <span key={`user-permission-${permission.id}`}>{permission.name}</span>
       ))}
     </div>

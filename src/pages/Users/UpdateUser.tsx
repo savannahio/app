@@ -4,7 +4,7 @@ import {
   reducer,
   Types,
 } from "@hooks/users/useUpdateUser";
-import { AuthUser, User } from "project-ts";
+import { AuthUser, User } from "api-ts-axios";
 import ResendVerificationEmailButton from "@components/buttons/ResendVerificationEmailButton";
 import { AuthContext, AuthContextType } from "@context/authContext";
 import { usersApi } from "@api/project";

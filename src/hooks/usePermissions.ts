@@ -4,7 +4,7 @@ import {
   PaginatedPermissions,
   PermissionOrderBy,
   PermissionsApiGetPermissionsRequest,
-} from "project-ts";
+} from "api-ts-axios";
 import { metaUtil } from "@utils";
 import { Dispatch, Reducer } from "react";
 import { permissionsApi } from "@api/project";

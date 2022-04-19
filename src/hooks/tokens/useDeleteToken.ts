@@ -1,5 +1,5 @@
 import { ApiRequest } from "@types";
-import { AccessTokensApiDeleteTokenRequest } from "project-ts";
+import { AccessTokensApiDeleteTokenRequest } from "api-ts-axios";
 import { metaUtil } from "@utils";
 import { Reducer } from "react";
 

@@ -5,7 +5,7 @@ import {
   UsersApi,
   Configuration,
   AccessTokensApi,
-} from "project-ts";
+} from "api-ts-axios";
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { routes } from "@routes";
 import { storageUtil } from "@utils";

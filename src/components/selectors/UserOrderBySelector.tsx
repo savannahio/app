@@ -1,5 +1,5 @@
 import React from "react";
-import { UserOrderBy } from "project-ts";
+import { UserOrderBy } from "api-ts-axios";
 
 interface Props {
   disabled?: boolean;

@@ -1,37 +1,25 @@
 import { ApiRequest, ApiResponse } from "@types";
 import {
-  DirectionParam,
-  PaginatedRoles,
-  RoleOrderBy,
-  UsersApiGetUserRolesRequest,
-} from "project-ts";
+  Role,
+  UsersApiGetUserRolesRequest
+} from "api-ts-axios";
 import { metaUtil } from "@utils";
 import { Reducer } from "react";
 
 interface State
   extends ApiRequest<UsersApiGetUserRolesRequest>,
-    ApiResponse<PaginatedRoles> {}
+    ApiResponse<Array<Role>> {}
 
 export const userRoleIS: State = {
   request: {
     id: 0,
-    page: 1,
-    per_page: 100000,
-    direction: DirectionParam.asc,
-    order_by: RoleOrderBy.id,
   },
-  data: {
-    data: [],
-  },
+  data: [],
   ui: metaUtil.initial,
 };
 
 export enum UserRoleTypes {
   setId = 'SET_ID',
-  setPage = "SET_PAGE",
-  setPerPage = "SET_PER_PAGE",
-  setDirection = "SET_DIRECTION",
-  setOrderBy = "SET_ORDER_BY",
   loading = "LOADING",
   loaded = "LOADED",
   rejected = "REJECTED",
@@ -39,12 +27,8 @@ export enum UserRoleTypes {
 
 export type UserRoleActions =
   { type: UserRoleTypes.setId; payload: number }
-  | { type: UserRoleTypes.setPage; payload: number }
-  | { type: UserRoleTypes.setPerPage; payload: number }
-  | { type: UserRoleTypes.setDirection; payload: DirectionParam }
-  | { type: UserRoleTypes.setOrderBy; payload: RoleOrderBy }
   | { type: UserRoleTypes.loading }
-  | { type: UserRoleTypes.loaded; payload: PaginatedRoles }
+  | { type: UserRoleTypes.loaded; payload: Array<Role> }
   | { type: UserRoleTypes.rejected };
 
 export const userRolesReducer: Reducer<State, UserRoleActions> = (state, payload): State => {
@@ -55,38 +39,6 @@ export const userRolesReducer: Reducer<State, UserRoleActions> = (state, payload
         request: {
           ...state.request,
           id: payload.payload,
-        },
-      };
-    case UserRoleTypes.setPage:
-      return {
-        ...state,
-        request: {
-          ...state.request,
-          page: payload.payload,
-        },
-      };
-    case UserRoleTypes.setPerPage:
-      return {
-        ...state,
-        request: {
-          ...state.request,
-          per_page: payload.payload,
-        },
-      };
-    case UserRoleTypes.setDirection:
-      return {
-        ...state,
-        request: {
-          ...state.request,
-          direction: payload.payload,
-        },
-      };
-    case UserRoleTypes.setOrderBy:
-      return {
-        ...state,
-        request: {
-          ...state.request,
-          order_by: payload.payload,
         },
       };
     case UserRoleTypes.loading:

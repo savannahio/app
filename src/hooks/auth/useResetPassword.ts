@@ -1,5 +1,5 @@
 import { ApiRequest } from "@types";
-import { ResetPasswordRequest, AuthApiResetPasswordRequest } from "project-ts";
+import { ResetPasswordRequest, AuthApiResetPasswordRequest } from "api-ts-axios";
 import { metaUtil } from "@utils";
 import { Dispatch, Reducer } from "react";
 import { authApi } from "@api/project";

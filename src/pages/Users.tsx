@@ -1,14 +1,16 @@
-import React, { useEffect, useReducer } from "react";
-import { Link } from 'react-router-dom'
+import React, { useContext, useEffect, useReducer } from "react";
+import { Link } from "react-router-dom";
 import { initialState, reducer, getUsers } from "@hooks/useUsers";
 import UserOrderBySelector from "@components/selectors/UserOrderBySelector";
-import { DirectionParam, UserOrderBy } from "project-ts";
+import { DirectionParam, UserOrderBy } from "api-ts-axios";
 import DirectionSelector from "@components/selectors/DirectionSelector";
 import PerPageSelector from "@components/selectors/PerPageSelector";
 import { PaginationTypes } from "@types";
 import { routes } from "@routes";
+import { AuthContext, AuthContextType } from "@context/authContext";
 
-const Users: React.FC<{}> = () => {
+const Users: React.FC = () => {
+  const { permissions } = useContext(AuthContext) as AuthContextType;
   const [{ request, data, ui }, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
     getUsers(request, dispatch);
@@ -57,7 +59,11 @@ const Users: React.FC<{}> = () => {
         <tbody>
         {data.data.map(user => (
           <tr key={`user-${user.id}`}>
-            <td><Link state={{user}} to={routes.users.edit.path.replace(':id', user.id.toString())}>{user.id}</Link></td>
+            <td>
+              {permissions.users.show
+                ? <Link state={{ user }} to={routes.users.edit.path.replace(":id", user.id.toString())}>{user.id}</Link>
+                : user.id}
+            </td>
             <td>{`${user.first_name} ${user.last_name}`}</td>
             <td>{user.email}</td>
           </tr>

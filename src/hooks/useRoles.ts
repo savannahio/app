@@ -4,7 +4,7 @@ import {
   PaginatedRoles,
   RoleOrderBy,
   RolesApiGetRolesRequest,
-} from "project-ts";
+} from "api-ts-axios";
 import { metaUtil } from "@utils";
 import { Dispatch, Reducer } from "react";
 import { rolesApi } from "@api/project";

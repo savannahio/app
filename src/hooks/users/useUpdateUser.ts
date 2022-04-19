@@ -2,7 +2,7 @@ import { Reducer } from "react";
 import {
   UpdateUserRequest,
   User,
-} from "project-ts";
+} from "api-ts-axios";
 import { ApiRequest, ApiResponse } from "@types";
 import { metaUtil } from "@utils";
 

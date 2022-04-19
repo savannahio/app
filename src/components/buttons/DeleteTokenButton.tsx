@@ -5,7 +5,7 @@ import {
   DeleteTokenTypes
 } from "@hooks/tokens/useDeleteToken";
 import { accessTokenApi } from "@api/project";
-import { PersonalAccessToken } from "project-ts";
+import { PersonalAccessToken } from "api-ts-axios";
 
 interface Props {
   token: PersonalAccessToken

@@ -1,4 +1,19 @@
+
 export const routes = {
+  api: {
+    horizon: {
+      path: process.env.REACT_APP_API_HORIZON_URL as string,
+      name: "Horizon"
+    },
+    telescope: {
+      path: process.env.REACT_APP_API_TELESCOPE_URL as string,
+      name: "Telescope"
+    },
+    documentation: {
+      path: process.env.REACT_APP_API_DOCUMENTATION_URL as string,
+      name: "API Docs"
+    }
+  },
   home: {
     path: "/",
     name: 'Home'

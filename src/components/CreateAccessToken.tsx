@@ -4,7 +4,7 @@ import {
   reducer,
   CreateTokenTypes,
 } from "@hooks/tokens/useCreateToken";
-import { NewAccessToken } from "project-ts";
+import { NewAccessToken } from "api-ts-axios";
 import { accessTokenApi } from "@api/project";
 
 interface Props {

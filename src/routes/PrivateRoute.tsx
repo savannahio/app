@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router";
-import { AuthUser } from "project-ts";
+import { AuthUser } from "api-ts-axios";
 import { routes } from "@routes/routes";
 
 export type Props = {
