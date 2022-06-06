@@ -18,7 +18,7 @@ export const aclUtil: Acl = {
   hasRoles,
   canViewApiDocumentation: (userPermissions) => hasPermissions(userPermissions, [PermissionName.view_api_documentation]),
   canViewHorizon: (userPermissions) => hasPermissions(userPermissions, [PermissionName.view_horizon]),
-  canViewTelescope: (userPermissions) => hasPermissions(userPermissions, [PermissionName.view_horizon]),
+  canViewTelescope: (userPermissions) => hasPermissions(userPermissions, [PermissionName.view_telescope]),
   canCreateUsers: (userPermissions) => hasPermissions(userPermissions, [PermissionName.create_users]),
   canUpdateUsers: (userPermissions) => hasPermissions(userPermissions, [PermissionName.create_users]),
   canDeleteUsers: (userPermissions) => hasPermissions(userPermissions, [PermissionName.delete_users]),

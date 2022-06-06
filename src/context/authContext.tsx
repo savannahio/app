@@ -1,8 +1,9 @@
-import React, { ReactNode, useMemo, createContext } from "react";
+import React, { ReactNode, useMemo, createContext, useEffect } from "react";
 import { ApiRequest, AuthPermissions, Observer } from "@types";
 import { AuthUser, CreateUserRequest, LoginRequest, User } from "api-ts-axios";
 import { getAuthPermissions, getUniqueUserPermissions, metaUtil, storageUtil } from "@utils";
 import { authApi, terminateSession, usersApi } from "@api/project";
+import { BroadcastCallback, BroadcastEventTypes, connectToPusher, disconnectFromPusher } from "@utils/pusherUtil";
 
 export interface AuthState {
   user: AuthUser | undefined
@@ -68,11 +69,14 @@ interface Props {
 
 export const AuthProvider: React.FC<Props> = ({ children }) => {
   const [auth, setAuth] = React.useState<AuthState>(authIS)
-
+  useEffect(() => {
+    getAuthUser()
+  }, [])
   const logoutUser = async () => {
     setAuth({...auth, logout: {ui: metaUtil.loading}})
     await terminateSession();
     setAuth({...auth, user: undefined, logout: {ui: metaUtil.loaded}})
+    disconnectFromPusher()
   }
 
   const getAuthUser = async () => {
@@ -81,13 +85,23 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     setAuthUser(data)
   }
 
+  const broadcastEventHandler: BroadcastCallback = async ({ event, payload }) => {
+    switch (event) {
+      case BroadcastEventTypes.UserUpdatedEvent: await getAuthUser(); break
+      case BroadcastEventTypes.UserUpdatedEmailEvent: await getAuthUser(); break
+      case BroadcastEventTypes.UserVerifiedEmailEvent: await getAuthUser(); break
+      case BroadcastEventTypes.UserPermissionsUpdatedEvent: await getAuthUser(); break
+      case BroadcastEventTypes.UserRolesUpdatedEvent: await getAuthUser(); break
+      default: break;
+    }
+  }
+
   const setAuthUser = (request?: AuthUser|User) => {
-    const data = !request ? request : {...auth.user, ...request} as AuthUser
+    const data = {...auth.user, ...request} as AuthUser
     const uniquePermissions = data ? getUniqueUserPermissions(data) : [];
     setAuth({...auth, user: data, permissions: getAuthPermissions(uniquePermissions)})
-    if (data) {
-      storageUtil.setUser(data)
-    }
+    storageUtil.setUser(data!)
+    connectToPusher(data!, broadcastEventHandler)
   }
 
   const setRegisterRequest = (request: CreateUserRequest) => {
@@ -97,6 +111,7 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
   const setLoginRequest = (request: LoginRequest) => {
     setAuth({...auth, login: {...auth.login, request}})
   }
+
   const loginUser = async (request: LoginRequest) => {
     await setAuth({...auth, login: {request, ui: metaUtil.loading}})
     await authApi.getAuthCookie();

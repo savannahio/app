@@ -12,7 +12,7 @@ interface Props {
 const Navbar: React.FC<Props> = ({ user }) => {
   const { permissions } = useContext(AuthContext) as AuthContextType
   const { api: { horizon, telescope, documentation } } = permissions
-  const canViewAPiSelector = horizon && telescope && documentation
+  const canViewAPiSelector = horizon || telescope || documentation
 
   const onApiDocsChange = (uri: string) => {
     // @ts-ignore
