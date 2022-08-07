@@ -2,14 +2,11 @@
 
 ## Available Scripts
 
-### `npm start`
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### `Building with docker`
+	docker build \
+      --build-arg BUILDKIT_INLINE_CACHE=1 \
+      --cache-from 70app:latest \
+      --tag 70app:latest .
 
-### `npm test`
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### `Running docker image`
+    docker run -d -it -p 3000:3000 70app:latest

@@ -1,4 +1,4 @@
-import Pusher, { AuthorizerCallback } from "pusher-js";
+import Pusher from "pusher-js";
 import { authApi } from "@api/project";
 import { User } from "api-ts-axios";
 
@@ -28,7 +28,7 @@ export const connectToPusher = (user: User, onEventReceived: BroadcastCallback):
     window.Pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY as string, {
       cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER as string,
       authorizer: (channel) => ({
-        authorize: async (socketId: string, callback: AuthorizerCallback) => {
+        authorize: async (socketId: string, callback) => {
           try {
             const response = await authApi.authorizeBroadcasting({ AuthorizeBroadcastingRequest: { socket_id: socketId, channel_name: channel.name }})
             callback(null, response.data)
